@@ -9,7 +9,7 @@ containers:
     volumes:
       - /var/lib/mongodb
 
-  - name: mysql_data
+  - name: mariadb_data
     image: aweber/mysqldata
     standalone: true
     visible: false
@@ -30,24 +30,6 @@ containers:
     volumes:
       - /var/lib/redis
 
-  - name: Couchbase
-    category: Low-Level
-    icon: couchbase
-    image: aweber/couchbase
-    ports:
-      - 8091
-      - 8092
-      - 11210
-      - 11211
-
-  - name: Elasticsearch
-    category: Low-Level
-    icon: elasticsearch
-    image: aweber/elasticsearch
-    ports:
-      - 9200
-      - 9300
-
   - name: Ghost
     category: Application
     icon: nodejs
@@ -57,40 +39,19 @@ containers:
     repository:
       url: https://github.com/TryGhost/Ghost.git
 
-  - name: Grafana
+- name: Seagull
     category: Application
-    dependencies:
-      - Elasticsearch
-      - Graphite
-    icon: fa-dashboard
-    image: aweber/grafana
+    icon: nodejs
+    image: tobegit3hub/seagull
     ports:
-      - 9202
-
-  - name: Graphite
+      - 10086
+  
+- name: Registry
     category: Low-Level
-    icon: fa-bar-chart-o
-    image: aweber/graphite
+    icon: mysql
+    image: registry:0.9.0
     ports:
-      - 2003
-      - 2004
-      - 2005
-
-  - name: InfluxDB
-    category: Low-Level
-    image: aweber/influxdb
-    ports:
-      - 8083
-      - 8086
-      - 8090
-      - 8099
-
-  - name: Memcached
-    category: Low-Level
-    icon: memcached
-    image: aweber/memcached
-    ports:
-      - 11211
+      - 5000
 
   - name: MongoDB
     category: Low-Level
@@ -101,12 +62,12 @@ containers:
     ports:
       - 27017
 
-  - name: MySQL
+  - name: MariaDB
     category: Low-Level
     icon: mysql
-    image: aweber/mysql
+    image: dockerfile/mariadb
     dependencies:
-      - mysql_data
+      - mariadb_data
     ports:
       - 3306
 
@@ -119,17 +80,6 @@ containers:
     ports:
       - 5432
 
-  - name: RabbitMQ
-    category: Low-Level
-    icon: rabbitmq
-    image: aweber/rabbitmq
-    ports:
-      - 1883
-      - 4369
-      - 5672
-      - 15672
-      - 25672
-
   - name: Redis
     category: Low-Level
     icon: redis
@@ -138,18 +88,6 @@ containers:
       - redis_data
     ports:
       - 6379
-
-  - name: StatsD
-    category: Low-Level
-    icon: nodejs
-    image: aweber/statsd
-    ports:
-      - guest: 8125
-        host: 8125
-        protocol: udp
-      - guest: 8126
-        host: 8126
-        protocol: tcp
 
 docker:
   server: registry.hub.docker.com
@@ -191,10 +129,10 @@ vagrant:
   box: coreos-alpha
   cpu_count: 2
   ram: 2048
-  hostname: vessel-public
+  hostname: basebox-vessel
   network:
     type: private
-    ip: 192.168.50.101
+    ip: 192.168.70.101
   providers:
     - name: virtualbox
       min_version: 402.2.0
