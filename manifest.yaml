@@ -2,17 +2,10 @@
 ---
 containers:
 
-  - name: pgsql_data
-    image: localhost:5000/pgdata:latest
-    standalone: true
-    visible: false
-    volumes:
-      - /var/lib/postgresql
-
   - name: Ghost
     category: Application
     icon: nodejs
-    image: localhost:5000/ghost:latest
+    image: dockerfile/ghost:latest
     ports:
       - 2368
     repository:
@@ -21,7 +14,7 @@ containers:
   - name: Seagull
     category: Application
     icon: nodejs
-    image: localhost:5000/seagull:latest
+    image: tobegit3hub/seagull:latest
     ports:
       - 10086
     repository:
@@ -30,18 +23,9 @@ containers:
   - name: Registry
     category: Low-Level
     icon: mysql
-    image: localhost:5000/registry:0.9.0
+    image: registry:0.9.0
     ports:
       - 5000
-
-  - name: PostgreSQL
-    category: Low-Level
-    dependencies:
-      - pgsql_data
-    icon: postgresql
-    image: localhost:5000/postgres:9.4.0
-    ports:
-      - 5432
 
 docker:
   server: registry.hub.docker.com
