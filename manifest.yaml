@@ -2,38 +2,17 @@
 ---
 containers:
 
-  - name: mongodb_data
-    image: aweber/mongodata
-    standalone: true
-    visible: false
-    volumes:
-      - /var/lib/mongodb
-
-  - name: mariadb_data
-    image: aweber/mysqldata
-    standalone: true
-    visible: false
-    volumes:
-      - /var/lib/mysql
-
   - name: pgsql_data
-    image: aweber/pgdata
+    image: localhost:5000/pgdata:latest
     standalone: true
     visible: false
     volumes:
       - /var/lib/postgresql
 
-  - name: redis_data
-    image: aweber/redisdata
-    standalone: true
-    visible: false
-    volumes:
-      - /var/lib/redis
-
   - name: Ghost
     category: Application
     icon: nodejs
-    image: aweber/ghost
+    image: localhost:5000/ghost:latest
     ports:
       - 2368
     repository:
@@ -42,52 +21,27 @@ containers:
   - name: Seagull
     category: Application
     icon: nodejs
-    image: tobegit3hub/seagull
+    image: localhost:5000/seagull:latest
     ports:
       - 10086
-  
+    repository:
+      url: https://github.com/tobegit3hub/seagull
+
   - name: Registry
     category: Low-Level
     icon: mysql
-    image: registry:0.9.0
+    image: localhost:5000/registry:0.9.0
     ports:
       - 5000
-
-  - name: MongoDB
-    category: Low-Level
-    icon: mongodb
-    image: aweber/mongodb
-    dependencies:
-      - mongodb_data
-    ports:
-      - 27017
-
-  - name: MariaDB
-    category: Low-Level
-    icon: mysql
-    image: dockerfile/mariadb
-    dependencies:
-      - mariadb_data
-    ports:
-      - 3306
 
   - name: PostgreSQL
     category: Low-Level
     dependencies:
       - pgsql_data
     icon: postgresql
-    image: aweber/postgresql
+    image: localhost:5000/postgres:9.4.0
     ports:
       - 5432
-
-  - name: Redis
-    category: Low-Level
-    icon: redis
-    image: aweber/redis
-    dependencies:
-      - redis_data
-    ports:
-      - 6379
 
 docker:
   server: registry.hub.docker.com
