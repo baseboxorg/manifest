@@ -81,12 +81,12 @@ ssh:
 
 vagrant:
   box: coreos-alpha
-  cpu_count: 2
-  ram: 2048
+  cpu_count: 1
+  ram: 1024
   hostname: basebox-vessel
   network:
     type: private
-    ip: 192.168.70.101
+    ip: 192.168.79.101
   providers:
     - name: virtualbox
       min_version: 402.2.0
